@@ -4,12 +4,13 @@ import org.example.classes.Financeiro;
 import org.example.classes.TipoFinanceiro;
 import org.example.conexao.Conexao;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class FinanceiroDAO {
     public void insertFinanceiro(Financeiro financeiro) {
-        String sql = "INSERT INTO financeiro (DS_FINANCEIRO,TP_FINANCEIRO,TP_DINHEIRO,VL_FINANCEIRO) VALUES (?,?,?,?) ";
+        String sql = "INSERT INTO financeiro (DS_FINANCEIRO,TP_FINANCEIRO,TP_DINHEIRO,VL_FINANCEIRO,ID_GRUPO,DT_FINANCEIRO) VALUES (?,?,?,?,?,?) ";
         PreparedStatement stmt = null;
         try{
             stmt = Conexao.getConnection().prepareStatement(sql);
@@ -17,6 +18,8 @@ public class FinanceiroDAO {
             stmt.setInt(2,financeiro.getId_tipo());
             stmt.setInt(3,financeiro.getId_dinheiro());
             stmt.setDouble(4,financeiro.getValor());
+            stmt.setInt(5,financeiro.getId_grupo());
+            stmt.setDate(6, Date.valueOf(financeiro.getData()));
 
             stmt.executeUpdate();
             stmt.close();
